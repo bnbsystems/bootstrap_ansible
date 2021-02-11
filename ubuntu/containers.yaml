@@ -1,0 +1,27 @@
+---
+- host: localhost
+  tasks:
+
+    - name: add gnupg key for codership repo
+      apt-key: keyserver=keyserver.ubuntu.com id=BC19DDBA
+
+    - name: add repo
+      apt_repository: repo='deb http://ubuntu-cloud.archive.canonical.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-updates/liberty main' state=present
+
+    - name: apt-get update
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: install packages
+      become: true
+      become_user: root
+      apt:
+        name:
+        - zip
+        - wget
+        state: present
+        update_cache: true
+    - name: autoclean
+      apt:
+        autoclean: yes
+      
