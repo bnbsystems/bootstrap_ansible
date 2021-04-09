@@ -1,5 +1,5 @@
   - hosts: localhost
-    connection: local 
+    connection: local
     become: true
     become_user: root
     tasks:
@@ -10,11 +10,17 @@
       - name: install packages
         apt:
           name:
-          - zip
-          - wget
+          - nodejs
           state: present
           update_cache: true
+      - shell: 'curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash'
+      - shell: nvm install --lts
+      - community.general.npm:
+          name:
+            - near-cli
+            - joi
+          global: yes
       - name: autoclean
         apt:
           autoclean: yes
-      
+

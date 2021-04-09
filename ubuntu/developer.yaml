@@ -1,21 +1,29 @@
----
   - hosts: localhost
-    connection: local 
+    connection: local
     become: true
     become_user: root
     tasks:
-      - name: apt-get update
-        apt:
+      - apt:
           update_cache: yes
           cache_valid_time: 3600
-      - name: install packages
-        apt:
+      - apt:
           name:
-          - zip
-          - wget
+          - ubuntu-desktop
+          - tasksel
+          - slim
+          - xorg
+          - snapd
+          - vlc
+          - zlib1g-dev
           state: present
           update_cache: true
+      - community.general.snap:
+          name:
+          - heroku
+          - code
+          - pycharm-community
+          classic: yes
       - name: autoclean
         apt:
           autoclean: yes
-      
+
