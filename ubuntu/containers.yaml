@@ -3,6 +3,13 @@
     become: true
     become_user: root
     tasks:
+      - name: Docker official GPG key
+        shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg -v --dearmor --yes -o /usr/share/keyrings/docker-archive-keyring.gpg"
+      - name: Docker stable repo
+        shell: | 
+          echo \
+          "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+          $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
       - name: apt-get update
         apt:
           update_cache: yes
@@ -10,11 +17,21 @@
       - name: install packages
         apt:
           name:
-          - zip
-          - wget
+          - docker-ce 
+          - docker-ce-cli 
+          - containerd.io
           state: present
           update_cache: true
       - name: autoclean
         apt:
           autoclean: yes
+      - name: groupadd
+        group:
+          name: docker
+          state: present
+      - name: add user to group
+        user: 
+          name: arekbee
+          group: docker 
+          append: yes
       

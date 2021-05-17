@@ -6,6 +6,6 @@
 #     echo "Your command line contains no arguments"
 #     exit 1
 # fi
-file=polkadot.yaml
+file=containers.yaml
 ansible-lint $file
-ansible-playbook --ask-become-pass $file
+ansible-playbook -vvv --ask-become-pass $file
