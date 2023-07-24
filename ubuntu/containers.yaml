@@ -28,8 +28,9 @@
           - apt-transport-https
           - kubelet 
           - kubeadm 
-          - kubectl
+          #- kubectl
           - nmap
+          - net-tools
           state: present
           update_cache: true
 
