@@ -1,8 +1,6 @@
 ---
   - hosts: localhost
     connection: local 
-    become: true
-    become_user: root
     tasks:
       - name: apt-get update
         apt:
@@ -22,10 +20,14 @@
           - libz-dev
           state: present
           update_cache: true
+        become: true
+        become_user: root
       - name: install rustup
-        shell: >
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-          source ~/.cargo/env
+        shell: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      #- shell: "~/.cargo/env"
+      - command: /bin/sh ~/.cargo/env
+      - shell: |    
           rustup default stable
           rustup update nightly
           rustup update stable

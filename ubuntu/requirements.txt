@@ -1,0 +1,8 @@
+django
+tensorflow
+uvicorn
+fastapi
+click
+boto3
+numpy
+pandas
