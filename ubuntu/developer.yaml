@@ -18,18 +18,47 @@
           - python3
           - pip
           - jq
-          - tux
+          - curl
+          - tmux
+          - dotnet-sdk-7.0
+          - aspnetcore-runtime-7.0
           state: present
-          update_cache: true
+          update_cache: false
       - community.general.snap:
           name:
           - heroku
           - code
           - pycharm-community
           classic: yes
+      - name: Install GitHub CLI
+        shell: | 
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+          && sudo apt update \
+          && sudo apt install gh -y
+      - name: Install yq
+        shell: | 
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod a+x /usr/local/bin/yq
+          yq --version
+      - name: Install homebrew
+        shell: |
+          sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      - community.general.homebrew:
+          name: 
+          - asdf
+          - derailed/k9s/k9s
+          - go
+          - ko
+          - terraformer
+          - terraform
+          - argocd
+          state: present
+      - shell: pwd
       - name: Install python packages
         ansible.builtin.pip:
-          requirements: "./requirements.txt"
+          requirements: requirements.txt
       - name: autoclean
         apt:
           autoclean: yes

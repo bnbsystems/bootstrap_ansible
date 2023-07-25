@@ -12,6 +12,10 @@
           name:
           - nodejs
           - jq
+          - dirmngr 
+          - gpg 
+          - curl 
+          - gawk
           state: present
           update_cache: true
       - shell: 'curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash'

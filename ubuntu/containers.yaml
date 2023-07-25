@@ -28,6 +28,8 @@
           - apt-transport-https
           - kubelet 
           - kubeadm 
+          - kubectx
+          - kubens
           #- kubectl
           - nmap
           - net-tools
@@ -45,6 +47,42 @@
           curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
           sudo install minikube-linux-amd64 /usr/local/bin/minikube
           rm minikube-linux-amd64
+      - name: Install helm
+        shell: | 
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+          rm get_helm.sh
+      - name: Install kops
+        shell: | 
+          curl -Lo kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+          chmod +x kops
+          sudo mv kops /usr/local/bin/kops
+      - name: Install krew
+        shel: |
+          set -x; cd "$(mktemp -d)" &&
+          OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+          ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+          KREW="krew-${OS}_${ARCH}" &&
+          curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+          tar zxvf "${KREW}.tar.gz" &&
+          ./"${KREW}" install krew
+          #export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+          kubectl krew
+      - name: Install krew plugins
+        shell: |
+          kubectl krew install tail access-matrix cert-manager deprecations flyte gadget ingress-nginx karmada kubescape neat score tail tree resource-capacity
+      - name: Install skaffold
+        shell: |
+          curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
+          sudo install skaffold /usr/local/bin/
+      - name: Install istioctl
+        shell: |
+          curl -L https://istio.io/downloadIstio | sh -
+      - community.general.snap:
+          name:
+            - microk8s 
+          classic: true
       - name: autoclean
         apt:
           autoclean: yes

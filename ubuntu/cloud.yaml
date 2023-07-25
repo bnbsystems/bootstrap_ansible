@@ -13,6 +13,11 @@
           - less
           - unzip
           - curl
+          - ca-certificates 
+          - apt-transport-https 
+          - lsb-release 
+          - gnupg
+          - software-properties-common
           state: present
           update_cache: true
         become: true
@@ -34,4 +39,23 @@
           sudo ./sam-installation/install
           sam --version
           rm -R ./sam-installation  aws-sam-cli.zip
-      
+      - name: Install pulumi
+        shell: |
+          curl -fsSL https://get.pulumi.com | sh
+      - name: Install terraform consul vault
+        shell: |
+          wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+          https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+          sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update
+          sudo apt-get install terraform consul
+          terraform --version
+          terraform -install-autocomplete
+      - name: Install sentinel 
+        shell: |
+          curl -fsSL -o sentinel.zip https://releases.hashicorp.com/sentinel/0.22.1/sentinel_0.22.1_linux_amd64.zip
+          unzip sentinel.zip 
+          mv sentinel /usr/bin/
+          rm sentinel.zip
+        

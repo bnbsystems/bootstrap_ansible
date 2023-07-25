@@ -33,7 +33,4 @@
           rustup update stable
           rustup target add wasm32-unknown-unknown --toolchain nightly
           rustup component add rust-src --toolchain nightly
-      - name: autoclean
-        apt:
-          autoclean: yes
       

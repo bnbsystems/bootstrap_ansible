@@ -6,3 +6,6 @@ click
 boto3
 numpy
 pandas
+kube-hunter
+powerfulseal
+kube-shell
