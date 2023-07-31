@@ -11,6 +11,20 @@
             - krew
             - skaffold
             - istioctl
+            - consul
+            - docker-compose
+            - docker-machine
+            - go
+            - jq
+            - nmap
+            - nomad
+            - openssl
+            - packer
+            - pyenv
+            - python
+            - tmux
+            - tree
+            - vault
           state: present
       - name: Install krew plugins
         shell: |
