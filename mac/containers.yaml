@@ -1,0 +1,18 @@
+  - hosts: localhost
+    connection: local 
+    tasks:
+      - community.general.homebrew:
+          name: 
+            - kubectl
+            - minikube
+            - docker
+            - helm
+            - kops
+            - krew
+            - skaffold
+            - istioctl
+          state: present
+      - name: Install krew plugins
+        shell: |
+          kubectl krew install tail access-matrix cert-manager deprecations flyte gadget ingress-nginx karmada kubescape neat score tail tree resource-capacity
+      
