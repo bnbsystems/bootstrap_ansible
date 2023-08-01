@@ -23,8 +23,20 @@
             - pyenv
             - python
             - tmux
+            - azure-cli
+            - terraform
+            - awscli
             - tree
+            - mono-libgdiplus
             - vault
+            - asdf
+            - derailed/k9s/k9s
+            - go
+            - colima
+            - ko
+            - terraformer
+            - terraform
+            - argocd
           state: present
       - name: Install krew plugins
         shell: |
