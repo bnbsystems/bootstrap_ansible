@@ -33,6 +33,7 @@
           #- kubectl
           - nmap
           - net-tools
+          - nfs-common
           state: present
           update_cache: true
 
