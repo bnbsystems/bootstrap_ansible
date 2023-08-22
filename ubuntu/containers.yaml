@@ -75,7 +75,7 @@
           kubectl krew
       - name: Install krew plugins
         shell: |
-          kubectl krew install tail access-matrix cert-manager deprecations flyte gadget ingress-nginx karmada kubescape neat score tail tree resource-capacity
+          kubectl krew install tail access-matrix cert-manager deprecations flyte gadget ingress-nginx karmada kubescape neat score tail tree resource-capacity rook-ceph
       - name: Install skaffold
         shell: |
           curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
@@ -83,6 +83,14 @@
       - name: Install istioctl
         shell: |
           curl -L https://istio.io/downloadIstio | sh -
+      - name: Install linkerd 
+        shell: |
+          curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install | sh
+      - name: Install  Open Policy Agent 
+        shell: |
+          curl -L -o opa https://openpolicyagent.org/downloads/v0.55.0/opa_linux_amd64_static
+          chmod 755 ./opa
+          sudo mv opa /usr/local/bin/opa
       - community.general.snap:
           name:
             - microk8s 
