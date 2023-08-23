@@ -34,6 +34,7 @@
           - nmap
           - net-tools
           - nfs-common
+          - bridge-utils
           state: present
           update_cache: true
 
