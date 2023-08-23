@@ -9,3 +9,4 @@ pandas
 kube-hunter
 powerfulseal
 kube-shell
+minio
