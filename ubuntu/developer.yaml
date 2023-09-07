@@ -16,6 +16,7 @@
           - vlc
           - zlib1g-dev
           - python3
+          - python3-poetry
           - pip
           - jq
           - curl
