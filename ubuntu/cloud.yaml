@@ -18,6 +18,7 @@
           - lsb-release 
           - gnupg
           - software-properties-common
+          - libkrb5-dev
           state: present
           update_cache: true
         become: true
