@@ -10,3 +10,4 @@ kube-hunter
 powerfulseal
 kube-shell
 minio
+aws-adfs
