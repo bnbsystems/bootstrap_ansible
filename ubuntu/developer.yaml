@@ -20,6 +20,7 @@
           - jq
           - curl
           - tmux
+          - xclip
           - dotnet-sdk-7.0
           - aspnetcore-runtime-7.0
           state: present
