@@ -57,6 +57,7 @@
           - terraform
           - argocd
           - faas-cli
+          - glab
           state: present
       - shell: pwd
       - name: Install python packages
